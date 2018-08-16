@@ -1,0 +1,694 @@
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+%   Minhas notas
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+%   PREÂMBULO
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+\documentclass[final,1p,times,10pt]{elsarticle}
+\usepackage[latin1]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{graphicx}
+\usepackage{amscd}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+%\setlength{\topmargin}{-0.2in}
+%\setlength{\oddsidemargin}{-0.2in}
+%\setlength{\textheight}{9in}
+%\setlength{\textwidth}{5.5in}
+
+\newtheorem{teorema}{Teorema}%[section]
+\newtheorem{proposicao}{Proposição}%[section]
+\newtheorem{corolario}{Corolário}%[section]
+\newtheorem{lema}{Lema}%[section]
+\newtheorem{exemplo}{Exemplo}%[section]
+\newtheorem{definicao}{Definição}%[section]
+\newtheorem{notacao}{Notação}%[section]
+\newtheorem{problema}{Problema}%[section]
+\newtheorem{resposta}{Resposta do Problema}%[section]
+\newtheorem{fato}{Fato}%[section]
+\newtheorem{afirmacao}{Afirmação}%[section]
+
+\journal{Combinatorial Theory}
+
+
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+%   CORPO DO DOCUMENTO
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+\begin{document}
+
+
+\begin{frontmatter}
+
+% TÍTULO:
+\title{Tópicos Elementares em Teoria dos Grafos}
+
+% AUTORES:
+\author{W. M. dos Santos\corref{cor1}}
+\ead{walner@alu.ufc.br}
+\cortext[cor1]{Aluno de bacharelado em Matemática pela Universidade Federal do Ceará.}
+
+%\author{\\Fabrício Siqueira Benevides.\corref{cor2}}
+%\cortext[cor2]{Orientador.}
+
+% ENDEREÇOS:
+\address{Universidade Federal do Ceará}
+
+% RESUMO:
+\begin{abstract}
+    Neste texto, apresentaremos alguns dos principais teoremas elementares em Teoria dos Grafos.
+\end{abstract}
+
+% PALAVARAS-CHAVE
+\begin{keyword}
+    Teoria dos grafos.
+\end{keyword}
+
+\end{frontmatter}
+
+
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+%   CORPO DO TEXTO
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+\section{Passeios Eulerianos}
+
+\begin{fato}
+  Para todo grafo $G=(V,E)$, vale que
+  $$
+  \sum_{v\in V} d(v) = 2|E|.
+  $$
+\end{fato}
+
+\begin{fato}
+  Um grafo conexo com $n$ vértices é uma árvore se, e somente se, ele contém $n-1$ arestas.
+\end{fato}
+
+Para provar o Teorema de Euler, usaremos o seguinte
+\begin{lema}\label{lema1}
+  Um grafo conexo com pelo menos dois vértices e tal que todo vértice possui grau par, contém um ciclo.
+  \begin{proof}
+    Seja $G=(V,E)$ um grafo conexo com pelo menos dois vértices e com todo vértice de $G$ tendo grau par. Todo vértice de $G$ tem grau positivo, do
+    contrário, $G$ não seria conexo ou seria formado por apenas um vértice. Então todo vértice tem pelo menos grau $2$. Segue que
+    $$
+    |E| = \frac{1}{2}\sum_{v\in V} d(v) \geq \frac{1}{2} \sum_{v\in V} 2 = |V|
+    $$
+    Então $G$ não é uma árvore, pois se fosse, teríamos $|E| = |V| -1$. Logo, $G$ contém um ciclo.
+  \end{proof}
+\end{lema}
+
+Um \emph{passeio Euleriano} em um grafo conexo $G$ é um passeio fechado que passa por cada aresta de $G$ uma única vez. Quando existir um tal passeio em
+$G$, dizemos que $G$ é \emph{Euleriano}.
+
+O seguinte resultado é conhecido como o primeiro teorema em Teoria dos Grafos e é devido a Euler.
+\begin{teorema}[do Passeio de Euler]
+  Um grafo conexo é Euleriano se, e somente se, todo vértice possui grau par.
+  \begin{proof}
+    Seja $G=(V,E)$ um grafo conexo. Suponha que ele seja Euleriano. Seja, então, $W = v_0 e_0 \ldots e_{m-1} v_0$ um passeio Euleriano em $G$. Um vértice
+    aparecendo $k$ vezes em $W$ (ou $k+1$ vezes, se for o $v_0$) deve ter grau $2k$.
+
+    Suponha agora que todo vértice de $G$ tenha grau par. Provamos a recíproca por indução no número de arestas $m=|E|$. O menor número de aresta para um
+    grafo conexo tal que todo vértice tem grau par é $3$ e o grafo correspondente é um $K^3$. Trivialmente, $K^3$ é Euleriano. Suponha que todo grafo com
+    menos de $m>3$ arestas e tal que todo vértice possue grau par é Euleriano. Provamos que $G$ também é.
+
+    Seja $C$ um ciclo qualquer em $G$: a existência de $C$ é garantida pelo Lema \ref{lema1}. Seja $G':=G\setminus E(C)$ o grafo obitido a partir de $G$
+    deletando as arestas de $C$. Cada vértice do grafo $G'$ ainda possue grau par, uma vez que cada vértice de $C$ é incidente com duas arestas de $C$ e,
+    portanto, ao deletarmos tais arestas o grau dos vértices em $C$ irá diminuir duas unidades. Sejam $G_1,G_2, \ldots ,G_k$ as componentes conexas de
+    $G'$. Uma vez que $|G_i|<m$, qualquer que seja $i\in \{1, \ldots ,k\}$, temos que pela hipótese de indução, $G_i$ contém um passeio Euleriano $W_i$.
+
+    Agora construimos um passeio Euleriano $W$ em $G$. Seja $v_1$ um vértice qualquer de $C$ e fixe uma orientação no circuito $C$ a qual iremos seguir em
+    direção. Sem perda de generalidade, podemos supor que $G_1$ é a componente conexa em $G'$ que contém $v_1$. Seja agora $v_2$ o primeiro vértice de $C$,
+    seguindo a orientação fixada, que não pertença a componente $G_1$ e digamos que $G_2$ é a componente que o contém. Seja $v_3$ o primeiro vértice,
+    seguindo a orientação fixada, que não pertence a componente $G_1$ nem $G_2$ e digamos que $G_3$ é a componente que o contém. E analogamente definimos
+    os vértices $v_1, v_2,  \ldots , v_k$. Definimos o passeio $W$ sobre $G$ como sendo
+    $$
+    W := v_1 W_1 v_1 C v_2 W_2 v_2 C v_3 W_3 v_3 C  \ldots  C v_k W_k v_kC v_1
+    $$
+    É de verificação imediata que este passeio é Euleriano.
+  \end{proof}
+\end{teorema}
+
+\section{Conexidade}
+
+%\begin{teorema}[da $3$-conexidade de Tutte]
+%  Um grafo $G$ é $3$-conexo se, e somente se, existe um sequência $G_0,G_1, \ldots ,G_n$ de grafos com as seguintes propriedades:
+%  \begin{enumerate}
+%    \item[(i)] $G_0 = K^4$ e $G_n = G$;
+%    \item[(ii)] $G_{i-1}$ tem uma aresta $xy$ com $d(x),d(y)\geq 3$ e $G_i = G_{i+1}\setminus xy$, para todo $i<n$.
+%  \end{enumerate}
+%\end{teorema}
+
+\begin{teorema}[de Mader]
+  Todo grafo com grau médio pelo menos $4k$ tem um subgrafo $k$-conexo.
+\end{teorema}
+
+\begin{teorema}[de Menger]
+  Sejam $G=(V,E)$ um grafo e $A,B\subseteq V$. O número mínimo de vértices separando $A$ de $B$ em $G$ é igual ao número máximo de caminhos disjuntos entre
+  $A$ e $B$ em $G$.
+\end{teorema}
+
+\section{Ciclos Hamiltonianos}
+
+Um \emph{ciclo Hamiltoniano} é um ciclo que passa por todos os vértices do grafo. Quando um grafo contém tal ciclo, dizemos que ele é \emph{Hamiltoniano}.
+De modo geral, é bem mais difícil caracterizarmos grafos Hamiltonianos do que grafos Eulerianos. Os próximos teoremas nos dão algumas condições suficientes para que um grafo seja Hamiltoniano.
+
+\begin{teorema}[de Dirac]
+  Todo grafo com $n\geq 3$ vértices e grau mínimo pelo menos $n/2$ é Hamiltoniano.
+  \begin{proof}
+    Seja $G=(V,E)$ um grafo com $|G|=:n \geq 3$ vértices e $\delta(G) \geq n/2$. Então $G$ é conexo: caso contrário o grau de qualquer vértice na menor
+    componente $C$ de $G$ será menor do que a quantidade de vértices em $C$ que é menor do que $n/2$.
+
+    Seja $P = x_0 \ldots x_k$ o maior caminho em $G$. Pela maximalidade de $P$, todos os vizinhos de suas extremidades residem em $P$. Portanto, pelo
+    menos $n/2$ dos vértices $x_0 \ldots x_{k-1}$ são vizinhos de $x_k$ e pelo menos $n/2$ desses mesmos vértices $x_i$ são tais que $x_{i+1}$ é vizinho
+    $x_0$. Uma vez que $k<n$, pelo Princípio da Casa dos Pombos, algum vértice $x_i$ tem ambas as propriedades, então temos $x_0x_{i+1}\ni E$ e $x_ix_k \in
+    E$, para algum $i<k$.
+
+    Seja $P = x_0 \ldots x_k$ o maior caminho em $G$. Considere o conjunto $$A:=\{0\geq i \geq k-1;\; x_i x_k\in E\}$$ e o conjunto $$B:=\{0\geq i \geq
+    k-1;\; x_0 x_{i+1}\in E\}.$$ Pela maximalidade de $P$, todos os vizinhos de suas extremidades residem em $P$, logo $|A|\geq n/2$ e $|B|\geq n/2$. Além
+    disso, temos que $|A \cup B| \leq k < n$. Segue, então,
+    $$
+    |A\cap B| = |A| + |B| - |A\cup B| \geq n - k > 0.
+    $$
+    Logo, existe um $0\leq i \leq k-1$ tal que $x_ix_k\in E$ e $x_0 x_{i+1} \in E$ (Figura \ref{fig_10_1_1}).
+
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width=8cm]{figuras/fig_10_1_1}
+      \caption{Encontrando um ciclo Hamiltoniano na prova do Teorema de Dirac.}\label{fig_10_1_1}
+    \end{figure}
+
+    Afirmamos que o ciclo $C:=x_0 x_{i+1} P x_k x_i P x_0$ é um ciclo Hamiltoniano de $G$. De fato, uma vez que $G$ é conexo, caso $C$ não seja
+    Hamiltoniano, $C$ deverá ter um vizinho em $G-C$, o qual poderá ser combinado com um caminho gerador de $C$ para formar um caminho maior do que $P$.
+  \end{proof}
+\end{teorema}
+
+Dado um grafo $G$ com $n$ vértices e o grau de cada um de seus vértices $d_1 \leq \ldots \leq d_n $, dizemos que a sequência $(d_1,\ldots, d_n)$ é a \emph{sequência graduada} de $G$. Chamamos uma sequência $(a_1,\ldots,a_n)$ de \emph{Hamiltoniana} quando todo grafo com $n$ vértices e sequência graduada $(d_1,\ldots, d_n)\geq (a_1,\ldots, a_n)$, i.e., com $d_i \geq a_i,\forall 1\leq i \leq n$, for Hamiltoniano.
+
+O Teorema de Dirac, historicamente, foi um ponto de partida para a descoberta de uma série de fraquezas sobre a condição do grau dos vértices de um grafo a fim de que este seja Hamiltoniano. Estes desenvolvimentos culminam em um único teorema:
+
+\begin{teorema}[de Chvátal]
+  Um sequência de inteiros $(a_1,\ldots,a_n)$ tal que $0\leq a_1 \leq \ldots \leq a_n \leq n$ e $n\geq3$ é Hamiltoniana se, e somente se, vale para todo
+  $i<n/2$ o seguinte:
+  $$
+  a_i \leq i \Rightarrow a_{n-i} \geq n-i.
+  $$
+  \begin{proof}
+    Seja $\textbf{a} := (a_1,\ldots,a_n)$ uma sequência de inteiros tal que $0\leq a_1 \leq \ldots \leq a_n \leq n$ e $n\geq3$ e $n\geq 3$. Suponha que esta sequência não satisfaz a condição do teorema, i.e., para algum $h < n/2$ temos
+    $$
+    a_h \leq h \text{ e } a_{n-h} < n-h.
+    $$
+    Devemos mostrar que esta sequência não é Hamiltoniana, i.e., existe algum grafo com sequência graduada $\textbf{d} = (d_1,\ldots, d_n) \geq \textbf{a}$ que não é Hamiltoniano. Uma vez que a sequência
+    $$
+    (\underbrace{h,\ldots,h}_{\text{$h$ vezes}},\underbrace{n-h-1,\ldots,n-h-1}_{\text{$n-2h$ vezes}},\underbrace{n-1,\ldots,n-1}_{\text{$h$ vezes}})
+    $$
+    é maior do que ou igual à sequência $\textbf{a}$, é suficiente encontrar um grafo não Hamiltoniano com esta sequência graduada.
+  \end{proof}
+\end{teorema}
+
+
+Dado um grafo $G$, um subconjunto de vértices $B$ e um vértice $a \in V(G)\setminus B$, dizemos que um conjunto de caminhos conectando $a$ com os vértices de $B$ é um \emph{ventilador} $a-B$ quando qualquer dois desses caminhos têm apenas o vértice $a$ em comum. Para demonstrarmos o Teorema de Chvátal \& Erd\H{o}s, precisaremos de um
+
+\begin{lema}\label{lema4}
+  Seja $G = (V,E)$ um grafo. Dado $B\subseteq V$ e $a\in V\setminus B$, considere um subconjunto mínimo $S\subseteq V\setminus\{a\}$ de vértices separando $a$ de $B$. Então $|S|$ é igual ao número máximo de caminhos formando um ventilador $a-B$ em $G$.
+  \begin{proof}
+    Basta aplicar o Teorema de Menger com $A:=N(a)$.
+  \end{proof}
+\end{lema}
+
+Agora, vamos a prova do
+
+\begin{teorema}[de Chvátal \& Erd\H{o}s]
+  Seja $G = (V,E)$ um grafo com pelo menos três vértices. Se $\alpha(G)\leq\kappa(G)$, então $G$ é Hamiltoniano.
+  \begin{proof}
+    Considere um ciclo $C = v_0 v_1 \ldots v_l v_ 0$ máximo em $G$. Suponha que $C$ não seja Hamiltoniano. Então existe um vértice $v\in V\setminus C$. Seja $\mathcal{F} = \{P_i\; i\in I\subseteq [l]\}$ um ventilador $v-C$ de cardinalidade máxima e digamos que seja $v_i$ o vértice de $C$ que é extremidade de $P_i$.
+
+    Considere um subconjunto $S$ de cardinalidade mínima separando $v$ de $C$. Temos que
+    $$
+    |\mathcal{F}|  = |S| \geq \kappa(G),
+    $$
+    onde a igualdade é devida ao Lema \ref{lema4} e a desigualdade é devida a definição de $\kappa(G)$.
+
+    Considere o conjunto $H:=\{ v_i^{+}; i \in I\}$, onde $v_i^{+}$ denota o vértice sucessor de $v_i$ segundo uma orientação do ciclo $C$ fixada. Oberva-se que
+    \begin{enumerate}
+      \item[(i)] Para todo $i \in I$, $v_i \notin H$;
+      \item[(ii)] Para todo $i\neq j \in I$, $v_i^+ v_j^+ \notin E$;
+      \item[(iii)] Para todo $i \in I$, $v_i^+ v \notin E$.
+    \end{enumerate}
+    Suponha que $v_i \in H$. Então $v_i = v_j^+$, para algum $j\in I$. Assim, $v_i v_j \in E(C)$. Considere o ciclo $C':= C \cup P_i \cup P_j - v_i v_j$. Seque que $|C'| > |C|$, contrariando a maximalidade de $C$. Isso prova a validade de $(i)$.
+    Suponha que para algum $i\neq j \in I$, tenhamos $v_i^+ v_j^+ \notin E$. Considere o ciclo $C':= C \cup P_i \cup P_j \cup \{v_i^+ v_j^+\} - v_i v_i^+ - v_j v_j^+$. Seque que $|C'| > |C|$. Portanto, $(ii)$ é válido.
+    Por último, suponha que $v_i^+ v\in E$. Considere o ciclo $C':= C \cup P_i \cup \{v_i^+ v\} - v_i v_i^+$. Novamente, $|C'| > |C|$ e $(iii)$ é válido.
+
+    Agora, vamos as consequências. O ítem $(i)$ nos diz que $H \cap \{v_i; i \in I\} = \emptyset$, e portanto,
+    $$
+    |H| = |I| = |F|  \geq \kappa(G)
+    $$
+    Equivalentemente, $|H| + 1 > \kappa(G)$.
+    Os ítens $(ii)$ e $(iii)$ nos dizem que $H\cup\{v\}$ é um conjunto independente, e portanto,
+    $$
+    |H\cup\{v\}| = |H| + 1\leq \alpha(G).
+    $$
+    Concluímos que $\alpha (G) > \kappa(G)$, contrariando a hipótese do teorema.
+  \end{proof}
+\end{teorema}
+
+A recíproca do Teorema de Chvátal \& Erd\H{o}s não é verdadeira: considere o grafo $G = K^n \cup K^3$, onde $|K^n\cap K^3| = 2$; temos que $\kappa(G) = 2$ e $\alpha(G) = n$ (FIGURA).
+
+
+\section{Árvores de Cayley}
+
+Um \emph{grafo rotulado} é um trio $(V,E,\sigma)$, onde $V$ é um conjunto de vértice, $E$ é um conjunto de aressta e $\sigma$ é uma permutação de seus
+vértices.
+Dois grafos rotulados $G = (V,E,\sigma)$ e $G' = (V,E,\sigma')$ sobre o mesmo conjunto de vértices e de aresta são ditos diferentes se existe alguma aresta
+$ab\in E$ tal que $\sigma(a) \neq \sigma'(a)$ ou $\sigma(b) \neq \sigma'(b)$.
+
+Uma \emph{árvore rotulada} $T = (V,E,\sigma)$ é um grafo onde $(V,E)$ é uma árvore no senso comum. De modo geral, a única diferença de um grafo simples $G
+= (V,E)$ e de um grafo rotulado $G = (V,E,\sigma)$ é a permutação, não temos a necessidade de diferenciar notações e definições em relação a esses dois
+tipos de grafos. Advertimos para o fato de que dois grafos rotulados podem representar o mesmo grafo simples, mas com rótulos diferentes.
+
+Por mais incrivél que pareça, contar a quantidade de árvores rotuladas com $n$ vértices é mais fácil do que contar a quantidade de árvores não isomorfas. E
+ainda mais, não há um maneira geral de associar essas duas quantidades.
+
+O teorema seguinte é uma belíssima fórmula para a contagem de todas as árvores rotuladas sobre o conjunto de vértices $\{1,2,\ldots,n\}$. Como se não
+bastasse, este teorema é um exemplo de resultado em combinatória que possue algumas provas distintas em sua natureza. Em \cite{Aigner}, você poderá
+encontrar quatro provas distintas que vale a pena tomar conhecimento, sendo que uma delas será a que iremos dar aqui.
+
+\begin{teorema}[da Fórmula de Cayley]
+  O número de árvores rotuladas diferentes sobre $n$ vértices é igual a $n^{n-2}$.
+  \begin{proof}
+    Para provarmos o que queremos, iremos dificultar (ou não!) um pouco mais o problema. Seja $A$ um conjunto arbitrário de $k\leq n$ vértices. Dada uma
+    floresta $F$ com $n$ vértices, dizemos que $A$ é um conjunto de troncos de $F$ quando $F$ tiver $k$ árvores e cada elemento de $A$ aparecer em árvores
+    distintas.  Denotamos por $T_{n,k}$ a quantidade de florestas rotuladas $F$ em $\{1,\ldots,n\}$ tendo $A$ como um conjunto de troncos. Observe que o
+    conjunto $A$ não importa para o valor de $T_{n,k}$ e sim o tamanho k. O que queremos provar é que $T_{n,1} = n^{n-2}$.
+
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width=10cm]{figuras/fig_001}
+      \caption{Exemplo: $T_{4,2} = 8$, onde $A = \{1,2\}$.}\label{fig_001}
+    \end{figure}
+
+    Considere uma tal floresta $F$ e $A=\{1,2,\ldots,k\}$. Suponha que $1$ possue $i$ vizinhos em $F$ e seja $U$ o conjunto de tais vértices. Em
+    $F':=F\setminus\{1\}$, seja $A':=(A\setminus\{1\})\cup U$. Temos que $|A'| = k-1+i$. Contamos a quantidade de florestas em $F'$ que contém $A'$ com
+    tronco, uma vez que nenhum vértice de $A'$ podem ser adjacentes em $F'$, caso contrário, $F$ não seria uma floresta. Por recorrência, existem
+    $T_{n-1,k-1+i}$ florestas rotuladas $F'$ tendo $A'$ como conjunto de troncos.
+
+    Uma vez que isto vale para qualquer $U\subseteq \{k+1,\ldots,n\}$ com $i$ elementos e que as florestas $F$ assim contadas para um certo $U$ são
+    distintas para qualquer que seja outro $U$, temos que existem $\binom{n-k}{i}T_{n-1,k-1+i}$ floresta $F$ tendo $i$ vizinhos de $1$. Além disso, para
+    $i$ distintos, também teremos florestas contadas distintas e como o valor de $i$ varia de $0$ até $n-k$, temos que
+    \begin{equation}\label{eq1}
+    T_{n,k} = \sum_{i=0}^{n-k} \binom{n-k}{i}T_{n-1,k-1+i}.
+    \end{equation}
+    Onde colocamos $T_{0,0} = 1$, $T_{n,0} = 0$ para $n>0$. Note que $T_{0,0}$ é necessário para garantir que $T_{n,n} = 1$.
+
+    Agora provamos a seguinte
+    \begin{quote}
+      \textbf{\emph{Afirmação. }}
+      Temos que $$T_{n,k} = k n ^{n-k-1}$$ e, portanto, em particular, $$T_{n,1} = n^{n-2}.$$
+    \end{quote}
+    A partir de \ref{eq1} e usando indução, encontramos que
+    \begin{eqnarray*}
+    T_{n,k} & = & \sum_{i=0}^{n-k} \binom{n-k}{i} (k-1+i) (n-1)^{n-1-k-i} \quad \quad (i \rightarrow n-k-i) \\
+            & = & \sum_{i=0}^{n-k} \binom{n-k}{i} (n-1-i) (n-1)^{i-1} \\
+            & = & \sum_{i=0}^{n-k} \binom{n-k}{i} (n-1)^{i} - \sum_{i=1}^{n-k} \binom{n-k}{i} i(n-1)^{i-1} \\
+            & = & n^{n-k} - (n-k) \sum_{i=1}^{n-k} \binom{n-1-k}{i-1} (n-1)^{i-1} \\
+            & = & n^{n-k} - (n-k) \sum_{i=0}^{n-1-k} \binom{n-1-k}{i} (n-1)^{i} \\
+            & = & n^{n-k} - (n-k) n^{n-1-k} \\
+            & = & kn^{n-1-k}.
+\end{eqnarray*}
+
+
+  \end{proof}
+\end{teorema}
+
+\section{Emparelhamentos}
+
+O seguinte lema será usado na prova do Teorema de Gallai. Dado um grafo $G$, denotamos por $c(G)$ o número de componetes conexas em $G$.
+
+\begin{lema}\label{lema3}
+  Seja $G=(V,E)$ um grafo qualquer. Então $c(G) \geq |V|-|E|$.
+  \begin{proof}
+    Suponha que $G$ possui $n$ vértices e $m$ arestas. Digamos que $E=\{e_1,\ldots,e_m\}$.
+    Seja $G_0,G_1,\ldots,G_m$ uma sequência de grafos com $n$ vértices contruída apartir de um grafo trivial da seguinte maneira:
+    \begin{enumerate}
+      \item[(1)] $G_0 := (V,\emptyset);$
+      \item[(2)] $G_{i+1} := G_{i} \cup \{e_{i+1}\};$ para todo $0\leq i \leq m-1.$
+    \end{enumerate}
+    Temos que $\|G_{i}\| = i$, para todo $0\leq i \leq m$, e que $G_m = G$.
+
+    Devemos mostrar que $c(G) \geq n-m$. %Mostramos que $G_i \geq n-i\forall 0\leq i \leq m$.
+    Uma vez que $G_0$ é trivial, temos $c(G_0) = n$. Suponha que $c(G_i) \geq n-i$, para algum $i$. Quando contruímos $G_{i+1}$ a partir de $G_i$,
+    adcionamos apenas uma aresta em $G_i$. Daí, ou o número de componentes se mantém ou duas componentes se unem a uma só:
+
+    $$c(G_{i+1}) \in \{c(G_i),c(G_i)-1\}$$.
+
+    Logo, temos que $c(G_{i+1}) = c(G_i) \geq n-i > n-i-1$ ou temos que $c(G_{i+1}) = c(G_i)-1 \geq n-i-1$. Em qualquer dos casos, $c(G_{i+1}) \geq
+    n-(i+1)$. Então, por indução, $c(G) \geq n-m$.
+  \end{proof}
+\end{lema}
+
+Dado um grafo $G$, definimos os seguintes parâmetros:
+\begin{enumerate}
+  \item[$\alpha(G)$:] tamanho do maior conjunto independente em $G$.
+  \item[$\beta(G)$:] tamanho da menor cobertura por vértices das arestas de $G$.
+  \item[$\alpha'(G)$:] tamanho do maior emparelhamento em $G$.
+  \item[$\beta'(G)$:] tamanho da menor cobertura por arestas dos vértices de $G$.
+\end{enumerate}
+
+\begin{fato}
+  Seja $G$ um grafo qualquer. Então
+  \begin{enumerate}
+    \item $ \alpha(G) \leq \beta'(G)$;
+    \item $ \alpha'(G) \leq \beta(G)$.
+  \end{enumerate}
+  O grafo $K^3$ é um exemplo onde as desigualdades acima são estritas.
+\end{fato}
+
+O seguinte teorema mostra como os parâmetros definidos acima estão relacionados.
+
+\begin{teorema}[de Gallai]
+  Para todo grafo $G = (V,E)$ sem vértices isolados,
+  $$ \alpha(G) + \beta(G) = |V| = \alpha'(G) + \beta'(G).$$
+  \begin{proof}
+    Mostramos a primeira igualdade.
+    Seja $U$ um conjunto independente em $G$ com $\alpha(G)$ vértices. Seja $U' = V\setminus U$. Afirmo que $U'$ é uma cobertura por vértices das arestas
+    de $G$. De fato, suponha que exista alguma aresta $ab\in E$ que não seja incidente com algum vértice de $U'$. Então tanto $a$ quanto $b$ pertencem a
+    $U$, absurdo, pois $U$ é um conjunto independente, logo $U'$ é uma cobertura por vértices. Agora façamos as contas: $|U| = \alpha(G)$, $|U'| = |V| -
+    |U| \geq \beta(G)$, daí $|V| \geq \alpha(G) + \beta(G)$.
+
+    Seja $U$ uma cobertura por vértice das arestas com $\beta(G)$ vértices. Seja $U' = V\setminus U$. Afirmo que $U'$ é um conjunto independente. De fato,
+    suponha que exista dois vértices $a,b\in U'$ adjacentes. Como nem $a$ nem $b$ pertencem a $U$, a aresta $ab$ não é coberta por $U$, o que é uma
+    contradição, logo $U'$ é um conjunto independente. Fazendo as contas, $|U| = \beta(G)$, $|U'| = |V| - |U| \geq \alpha(G)$, daí $|V| \geq \alpha(G) +
+    \beta(G)$.
+
+    Mostramos a segunda igualdade.
+    Seja $M$ um emparelhamento com $\alpha'(G)$ arestas. Seja $U$ o conjunto de vértices de $G$ que não são incidentes com alguma aresta de $M$. Segue que
+    $|U| = |V| - 2|M|$. Seja $F$ o conjunto de arestas formado apartir de $M$ adcionando uma aresta para cada vértice em $U$. Segue que $|F| = |M| + |U| =
+    |V| - |M|$. Uma vez que $F$ é uma cobertura por arestas dos vértices de $G$, temos que $|F| \geq \beta'(G)$. Daí, $|V| - |M| \geq \beta'(G)$. Logo,
+    $|V| \geq \alpha'(G) + \beta'(G)$.
+
+    Seja $F$ uma cobertura por arestas dos vértices de $G$ com $\beta'(G)$ arestas. Sejam $G':=G[F]$ e $M$ um conjunto obtido escolhendo uma aresta para
+    cada componente conexa em $G'$. Pelo Lema \ref{lema3}, temos que $c(G') \geq |V|-|F|$, daí $M\geq |V| - |F|$. Uma vez que $M$ é um emparelhamento em
+    $G$, temos que $|M| \leq \alpha'(G)$. Segue então que $|V| - |F| \leq \alpha'(G)$. Logo, $|V| \leq \alpha'(G) + \beta'(G)$.
+  \end{proof}
+\end{teorema}
+
+Na prova dos dois teoremas abaixo usaremos o seguinte
+
+%\begin{lema}\label{lema2}
+%  Seja $G[A,B]$ um grafo bipartido e $M$ um emparelhamento maximal em $G$. Então não existe um caminho $M$-aumentante em $G$.
+%  \begin{proof}
+%    Suponha, por absurdo, que existe um caminho $M$-aumentante $P$ em $G$. Podemos supor que $P$ é maximal. Das duas uma, ou $P$ é da forma $$P=a_ 0 b_1
+%    a_1 \ldots b_{k} a_{k} b_{k+1}$$ ou é da forma $$P=b_0 a_1 b_1 \ldots a_{k} b_{k} a_{k+1},$$ onde em qualquer dos casos, $a_i b_i$ é uma aresta
+%    emparelhada de $M$, qualquer que seja $1\leq i \leq k$. De qualquer maneira, $P$ possui $k$ arestas emparelhadas e $k+1$ arestas não emparelhadas.
+%    Definimos o emparelhamento  $$M':=(M\setminus \{ a_1 b_1, \ldots , a_{k} b_{k}\}) \cup \{ a_0 b_1, a_1 b_2,  \ldots , a_{k} b_{k+1}\}$$ para o primeiro
+%    caso ou $$M':=(M\setminus \{ a_1 b_1, \ldots , a_{k} b_{k}\}) \cup \{ b_0 a_1, b_1 a_2,  \ldots , b_{k} a_{k+1}\}$$ para o segundo caso. Segue que
+%    $|M'| = |M| +1$, contrariando a maximalidade de $M$. Logo, não existe um caminho $M$-aumentante em $G$.
+%  \end{proof}
+%\end{lema}
+
+
+\begin{lema}\label{lema2}
+  Seja $G=(V,E)$ um grafo e $M$ um emparelhamento maximal em $G$. Então não existe um caminho $M$-aumentante em $G$.
+  \begin{proof}
+    Suponha, por absurdo, que existe um caminho $M$-aumentante $P$ em $G$. Podemos supor que $P$ é maximal. Portanto, $P$ é da forma
+    $$P=a_ 1 a_2 a_3 \ldots a_{2k-1} a_{2k},$$
+    onde $a_{2i} a_{2i+1}$ é uma aresta emparelhada de $M$, qualquer que seja $1\leq i \leq k-1$. Além disso, $P$ possui $k-1$ arestas emparelhadas e $k$ arestas não emparelhadas. Definimos o emparelhamento
+    $$M':=(M\setminus \{a_{2i} a_{2i+1};\; 1\leq i \leq k-1 \}) \cup \{ a_{2i-1} a_{2i};\; 1\leq i \leq k\}$$
+    Segue que $|M'| = |M| +1$, contrariando a maximalidade de $M$. Logo, não existe um caminho $M$-aumentante em $G$.
+  \end{proof}
+\end{lema}
+
+
+\begin{fato}
+  A recíproca do Lema \ref{lema2} é verdadeira, i.e., se $M$ é um emparelhamento em $G$ e não existe um caminhos $M$-aumentante, então $M$ é um
+  emparelhamento máximo. Este fato junto com o Lema \ref{lema2} é conhecido como Teorema de Berge.
+\end{fato}
+
+O seguinte teorema caracteriza um certo minizante como um maximizante. Resultados desse tipo são comumentes chamados de min-max. Ao longo do texto veremos
+outros resultados do tipo min-max e discutiremos algumas relações entre eles.
+
+\begin{teorema}[de K\"{o}nig]
+  A cardinalidade máxima de um emparelhamento em um grafo bipartido $G[A,B]$ é igual ao número mínimo de vértices cobertores de suas arestas (i.e.,
+  $\alpha'(G)= \beta(G)$).
+  \begin{proof}
+    Seja $M$ um emparelhamento máximo em $G$ e seja $m=|M|$. Para cada aresta $ab$ de $M$ escolhemos uma das suas extremidades: escolhemos a sua
+    extremidade em $B$, digamos que seja o vértice $b$, se não existe um caminho auternante terminando em $b$; escolhemos a sua extremidade em $A$, caso
+    contrário. Seja $U$ o conjunto desses vértices. Basta mostrar que $U$ cobre as arestas de $G$, uma vez que qualquer cobertura de $G$ deverá ter
+    vértices incidente em arestas de $M$, logo deverá ter pelo menos $m$ vértices (em outras palavras, $\alpha'(G)\leq \beta(G)$).
+
+    Seja $ab$ uma aresta qualquer em $G$ com $a\in A$ e $b\in B$. Mostramos que ou $a$ ou $b$ reside em $U$. Se $ab\in M$, não há o que fazer. Suponha,
+    então, que $ab\notin M$. Existe uma aresta $a'b'\in M$ com $a = a'$ ou $b = b'$, do contrário, poderíamos acrescentar a resta $ab$ ao emparelhamento
+    $M$ para termos um emparelhamento maior, contrariando a maximalidade de $M$. Se $b = b'$, então $ab$ é um caminho auternante terminando em $b'$, daí
+    $b\in U$. Suponha, pois, que $a = a'$ e que $a'\notin U$ (o caso em que $a'\in U$ não há o que fazer), então $b'\in U$. Segue que existe algum caminho
+    auternante $P$ terminando em $b'$. Daí, há um caminho alternante $P'$ terminando em $b$: ou o caminho $P':=Pb$ (se $b\in P$) ou o caminho $P':=Pb'ab$.
+    Pela maximalidade de $M$, $P'$ não é um caminho aumentante (devido ao Lema \ref{lema2}), logo $b$ deve ser emparelhado e foi escolhido para fazer parte
+    de $U$, uma vez que $P'$ é um caminho auternante terminando em $b$.
+  \end{proof}
+\end{teorema}
+
+O Teorema de K\"{o}nig pode ser provado diretamente do Teorema de Gallai de maneira trivial. Assumindo que $\alpha'(G)\leq \beta(G)$, provamos que
+$\alpha'(G) \geq \beta(G)$. Primeiro, observamos que $\alpha(G) \geq \max\{|A|,|B|\} \geq \beta'(G)$: tanto $A$ quanto $B$ são um conjunto independente em
+$G$ e qualquer cobertura por arestas dos vértices de $G$ deverá ter uma aresta para cada vértice de $A$ e uma aresta para cada vértice de $B$, uma vez que
+$G$ é bipartido. Portanto $\alpha(G)-\beta'(G)\geq 0$. Daí,
+$$
+\alpha'(G) = \beta(G) + \alpha(G) - \beta'(G) \geq \beta(G),
+$$
+onde a igualdade acima é devida ao Teorema de Gallai.
+
+
+O seguinte teorema tem como corolário o que originalmente é conhecido como o Teorema do Casamento, mas que na verdade é um caso particular do teorema
+abaixo, correspondendo ao caso no qual $|A|=|B|$.
+
+\begin{teorema}[do casamento de Hall]
+  Um grafo bipartido $G[A,B]$ contém um emparelhamento de $A$ se, e somente se, $|N(S)| \geq |S|$, para todo $S\subseteq A$.
+  \begin{proof}
+    Seja $G[A,B]$ um grafo bipartido qualquer. Suponha que $G$ contém uma emparelhamento $M$ de $A$ e que existe um conjunto $S\subseteq A$ com $|N(S)| <
+    |S|$. Considere o emparelhamento $M$ restrito a $S$. Uma vez que $|N(S)| < |S|$, algum vértice de $S$ deve não ser emparelhado. Mas isso contradiz o
+    fato de que $M$ é um emparelhamento de $A$, i.e., que $M$ satura $A$.
+
+    Para provarmos a recíproca, suponha, por absurdo, que não existe um emparelhamento de $A$ em $G$. Seja então $M$ um emparelhamento maximal em $G$, Por
+    hipótese, algum vértice de $A$, digamos $a_0$, não é emparelhado por $M$.
+
+    Considere a sequência $s:= (a_0,b_1,a_1,b_2,a_2,\ldots)$ maximal de vértices distintos com $a_i\in A$ e $b_i\in B$ satisfazendo as seguintes condições
+    para todo $i\geq 1$:
+
+    \begin{enumerate}
+      \item[(i)] $b_i$ é adjacente a algum vértice $a_{f(i)} \in\{ a_0,\ldots,a_{i-1}\}$;
+      \item[(ii)] $a_i b_i \in M$.
+    \end{enumerate}
+
+    Suponha que a sequência $$s = (a_0,b_1,a_1,\ldots,b_k, a_k)$$ satisfazendo $(i)-(ii)$ termine em um vértice de $A$. Seja $s(A):=\{a_0,a_1,\ldots,a_k\}$
+    e $s(B):=\{b_1,\ldots,b_k\}$. Pela condição de casamento, $|N(s(A))|\geq |s(A)| = k+1$, ou seja, existe pelo menos um vértice em $B$ adjacente a algum
+    vértice $a_i$ além dos vértices de $s(B)$, uma vez que $|s(B)| = k$. Seja $b_{k+1}$ tal vértice e consideramos a sequência $$s' =
+    (a_0,b_1,a_1,\ldots,b_k, a_k,b_{k+1}).$$ A nova sequência satisfaz $(i)-(ii)$ e é uma sequência maior que $s$, contrariando a maximalidade de $s$. Logo
+    a sequência $s$ termina em um vértice de $B$: $$s = (a_0,b_1,a_1,\ldots, a_{k-1},b_k).$$
+    Considere o caminho
+    $$
+    P:= b_k a_{f(k)} b_{f(k)} a_{f^2(k)} b_{f^2(k)} a_{f^3(k)} \ldots b_{f^{r-1}(k)} a_{f^r(k)},
+    $$
+    com $f^r(k)=0$. Por $(i)-(ii)$, $P$ é um caminho alternante.
+
+    O que falta para $P$ ser um caminho aumentante? Falta verificarmos que suas extremidades são não emparelhadas. A extremidade $a_{f^r(k)}= a_0$ sabemos
+    que ela não é emparelhada. Suponha que o vértice $b_k$ seja emparelhado, digamos a $a$. Temos que $a=a_i$, para algum $0<i<k$, caso contrário,
+    poderíamos extender a sequência $s$ acrescentado $a_k$. Mas a condição $(ii)$ implica que $b_i = b_k$. Contradição, pois $i<k$ e a sequência é formada
+    por vértices distintos. Logo $b_k$ não é emparelhado. Daí $P$ é um caminho aumentante. E graças ao Lema \ref{lema2}, $M$ não é um emparelhamento
+    maximal. Absurdo, pois sumpomos o contrário desde o início.
+  \end{proof}
+\end{teorema}
+
+O Teorema do Casamento de Hall pode ser provado usando o Teorema de K\"{o}nig. O que se afirma é que $\alpha'(G) = |A|$, que pelo Teorema de K\"{o}nig é equivalente a $\beta(G) = |A|$. É claro que $\beta(G) \leq |A|$, uma vez que $A$ é um cobertura por vértice das arestas de $G$. Suponha, pois, que $\beta(G) < |A|$. Então existe um conjunto $U\subsetneq A$ que cobre todas as arestas de $G$. Seja $S:=A\setminus U$. Por hipótese, $|S| \geq 1$. Além disso, pela hipótese do casamento, $|N(S)| \geq 1$. Segue que existe uma aresta incidente em um vértice de $S$, contradizendo o fato de que $U$ cobre todas as arestas. Logo, $\beta(G) = |A|$.
+
+Tanto o Teorema de K\"{o}nig quanto o de Hall caracterizam emparelhamentos em grafos bipartidos. O seguinte teorema caracteriza grafos bipartidos de maneira geral. Denotamos por $i(G)$ o número de componentes conexas de cardinalidade ímpar em $G$,
+
+\begin{teorema}[de Tutte]
+  Um grafo $G$ tem um emparelhamento perfeito se, e somente se, $i(G-S)\leq|S|$, para todo $S\subseteq V(G)$.
+  \begin{proof}
+    É claro que a condição de Tutte, i.e., $i(G-S)\leq|S|$, para todo $S\subseteq V(G)$, é necessária, uma vez que um emparelhamento de $G$ terá uma aresta ligando pelo menos um vértice de cada uma das componentes de cardinalidade ímpar em $G-S$ a um vértice de $S$. Provamos, então, que a condição de Tutte é suficiente.
+    
+    Aplicamos indução sobre $|G|$. Para um grafo com um único vértice, a afirmação é verdadeira por vacuidade, uma vez que a condição de Tutte não é satisfeita. Assumimos que para todos os grafos com menos de $|G|$ vértices, a afirmação seja verdadeira. Provamos que se $G$ satisfaz a condição de Tutte, então ele tem um emparelhamento perfeito.
+    
+    Seja $S_0$ um subconjunto máximo de $V$ que satisfaz a $i(G-S_0) = S_0$. Observe primeiro que sendo $S=\emptyset$, a condição de Tutte nos diz que $|G|$ é par. Além disso, sendo $S = \{s\}$, temos que $i(G-S) = 1 = |S|$, daí $S_0$ é não vazio.
+    
+    Sejam $C_1,\ldots,C_k$, com $k=|S_0|$, as componentes conexas de $G-S_0$ de cardinalidade ímpar e seja $D_1,\ldots,D_l$ as componentes pares. Uma vez que cada $D_i$ satisfaz a condição de Tutte, pela hipótese de indução, eles contém um emparelhamento perfeito.
+    
+    Seja $C := C_i$, para algum $i$, e seja $c \in C$. Afirmo que $C-c$ tem um emparelhamento perfeito. Caso contrário, pela hipótese de indução,
+    $$
+    i(C-S) > |S|,
+    $$
+    para algum $S \subset V(C)$.
+  \end{proof}
+\end{teorema}
+
+%Vejamos agora uma prova do Teorema de Tutte usando o Teorema do Casamento de Hall. Provamos apenas que a condição de Tutte é suficiente. Seja $G=(V,E)$ um grafo que satisfaz a condição de Tutte. Considere um subconjunto $S\subseteq V$ maximal tal que $i(G-S) = |S|$. Observe que $S$ está bem definido, uma vez que para todo $S = {v}$, vale que $i(G-S) = 1 = |S|$. Seja $G_1,\ldots,G_i$, com $i=i(G-S)$, as componentes conexas de $G-S$ com cardinalidade ímpar e seja $F_1,\ldots,F_j$ as componentes pares de $G-S$. Provamos as seguintes afirmações:
+%\begin{enumerate}
+%  \item Seja $G':=(V',E')$ um grafo onde $V':= S\cup \{G_1,\ldots,G_i\}$ e o conjunto de arestas $E'$ é formado pelas arestas $sG_k$ tais que $s\in S$ é adjacente a algum vértice $v$ de $G_k$ em $G$, com $1\leq k \leq i$. Então, existe um emparelhamento perfeito de $G'$.
+%  \item Para qualquer que seja $v\in V(G_k)$, com $1\leq k\leq i$, existe um emparelhamento perfeito de $G_k - v$.
+%  \item Existe um emparelhamento perfeito de $F_k$, com $1\leq k \leq j$.
+%\end{enumerate}
+%
+%Provamos a primeira afirmação. Pela definiçaõ de $S$, $|\{G_1,\ldots,G_i\}| = |S|$. Seja $S'\subset S$.
+
+
+\begin{fato}
+  Teorema de Gallai $\Rightarrow$ Teorema de K\"{o}nig $\Rightarrow$ Teorema de Hall $\Leftrightarrow$ Teorema de Tutte
+\end{fato}
+
+\section{Fluxo em Redes}
+
+Seja $\overrightarrow{G} = (V,\overrightarrow{E})$ um grafo direcionado e $s,t\in V$ dois vértices distintos. Dada uma função de \emph{capacidade} $c:\overrightarrow{E} \rightarrow \mathbb{N}$ que atribui a cada aresta direcionada de $\overrightarrow{G}$ um número natural, dizemos que $N = (\overrightarrow{G},s,t,c)$ é uma \emph{rede} quando $d^{-}(s) = d^{+}(t) = 0$. Note que $c$ é definido independente para as duas direções de uma aresta. Uma função $f:\overrightarrow{E} \rightarrow \mathbb{R}$ é um \emph{fluxo} em $N$ se ela satisfaz as seguintes três condições
+\begin{enumerate}
+  \item[(F1)] $f(x,y) = - f(y,x)$, para todo $x\neq y\in V$;
+  \item[(F2)] $f(x,V) := \sum_{v\in V} f(x,v) = 0$, para todo $v\in V\setminus \{s,t\}$;
+  \item[(F3)] $f(\overrightarrow{e}) \leq c(\overrightarrow{e})$, para todo $\overrightarrow{e}\in \overrightarrow{E}$.
+\end{enumerate}
+A condição $(F2)$ é chamada de \emph{Lei da Consevação}. Dizemos que $f$ é inteira (Diofantina) se todos os seus valores são inteiros.
+
+Seja $f$ um \emph{fluxo} em $N$. Se $S\subseteq V$ é tal que $s\in S$ e $t\in \overline{S}$, dizemos que o par $(S,\overline{S})$ é um corte em $N$. Além disso, $$c(S,\overline{S}) := \sum_{x\in S} \sum_{y \in \overline{S}} c(x,y)+c(y,x)$$ é a capacidade desse corte.
+
+\begin{teorema}[do fluxo máximo, corte mínimo de Ford \& Fulkerson]
+  Em toda rede, o valor total máximo de um fluxo é igual a mínima capacidade de um corte.
+\end{teorema}
+
+
+\section{Grafos Planares}
+
+\begin{teorema}[da Fórmula de Euler]
+  Seja $G$ um grafo plano conexo com $n$ vértices, $m$ arestas e $f$ faces. Então $n-m+l=2$.
+\end{teorema}
+
+\begin{teorema}[de Kuratowski]
+  Um grafo é planar se, e somente se, ele não contém $K_{5}$ e nem $K_{3,3}$ como menores topológicos.
+\end{teorema}
+
+\begin{teorema}[de Wagner]
+  Um grafo é planar se, e somente se, ele não contém $K_{5}$ e nem $K_{3,3}$ como menores.
+\end{teorema}
+
+
+\section{Coloração de Vértices}
+
+\begin{teorema}[de Brooks]
+  Um grafo conexo $G$ é tal que $\chi(G)=\Delta(G)+1$ se, e somente se, $G$ é um grafo completo ou um ciclo ímpar.
+\end{teorema}
+
+\begin{teorema}[de Erd\H{o}s]
+  Para todo inteiro $k$, existe um grafo $G$ com número cromático $\chi(G)>k$ e cintura $g(G)>k$.
+\end{teorema}
+
+\section{Coloração de Aresta}
+
+\begin{teorema}[de K\"{o}nig]
+  Se $G$ é um grafo bipartido, então $\chi'(G) = \Delta(G)$.
+\end{teorema}
+
+\begin{teorema}[de Vizing]
+  Todo grafo $G$ satisfaz
+  $$ \Delta(G) \leq \chi'(G) \leq \Delta(G)+1. $$
+\end{teorema}
+
+\section{Coloração de Grafos Planares}
+
+\begin{teorema}[das Quatro Cores]
+  Todo grafo planar é $4$-colorizável.
+\end{teorema}
+
+\begin{teorema}[das Cinco Cores]
+  Todo grafo planar é $5$-colorizável.
+\end{teorema}
+
+\begin{teorema}[de Thomassen]
+  Todo grafo planar $G$ admite uma coloração de listas com cinco cores ou menos: $\chi_{\ell}(G)\leq 5$.
+\end{teorema}
+
+\section{Grafo Perfeitos}
+
+\begin{teorema}[Forte de Grafos Perfeitos]
+  Um grafo $G$ é perfeito se, e somente se, nem $G$ e nem $\overline{G}$ contém ciclos ímpares de tamanho pelo menos $5$ como subgrafo induzido.
+\end{teorema}
+
+\begin{teorema}[Fraco de Grafos Perfeitos]
+  Um grafo $G$ é perfeito se, e somente se, $\overline{G}$ é perfeito.
+\end{teorema}
+
+\begin{teorema}[de Lovász]
+  Um grafo $G$ é perfeito se, e somente se,
+  $$ |H|\leq \alpha(H)\cdot \omega(H),$$
+  para todo subgrafo induzido $H\subseteq G$.
+\end{teorema}
+
+
+\section{Teoria Extremal dos Grafos}
+
+\begin{teorema}[de Turán]
+  Se um grafo $G=(V,E)$ em $n$ vértices não tem $p$-cliques, $p\geq 2$, então
+  $$ |E| \leq \left( 1 - \frac{1}{p-1} \right) \frac{n^2}{2}.$$
+\end{teorema}
+
+\begin{teorema}[de Erd\H{o}s \& Stone]
+  Seja $H$ um grafo arbitrário. Então
+  $$ ex(n,H) = \left(1 - \frac{1}{\chi(H)-1} + o(1)\right)\binom{n}{2} $$
+\end{teorema}
+
+\section{Teoria de Ramsey em Grafos}
+
+\begin{teorema}[de Ramsey]
+  Para todo $s\geq 1$ e $t\geq 1$, temos que
+  $$ R(s,t) \leq R(s-1,t) + R(s,t-1). $$
+\end{teorema}
+
+\begin{corolario}
+  Para todo $s\geq 1$ e $t\geq 1$, temos que
+  $$ R(s,t) \leq \binom{s+t-2}{s-1}. $$
+\end{corolario}
+
+\begin{teorema}[de Erd\H{o}s]
+  Seja $s\geq 3$. Então $$R(s) \geq \lfloor 2^{s/2} \rfloor. $$
+\end{teorema}
+
+%\begin{teorema}[de Chvátal \& Harary] Para todo par de grafos $G$ e $H$, vale que
+%  $$ R(G,H) \geq (\chi(G)-1)(c(H)-1) + 1. $$
+%\end{teorema}
+
+\section{Grafos Infinitos}
+
+\begin{teorema}[de Brujin \& Erd\H{o}s]
+  Seja $G = (V,E)$ um grafo infinito e $k\in\mathbb{N}$. Se para todo $H\subseteq{G}$ vale que $\chi(H)\leq k$, então $\chi(G)\leq k$.
+\end{teorema}
+
+
+\section{Cadeias e Anticadeias}
+
+\begin{teorema}[de Dilworth]
+  Seja $(A,\preceq)$ um conjunto parcialmente ordenado. O tamanho da maior anticadeia em $A$ é igual ao número mínimo de cadeias que combrem $A$.
+\end{teorema}
+
+\begin{teorema}[de Mirsky]
+  Seja $(A,\preceq)$ um conjunto parcialmente ordenado. O tamanho da maior cadeia em $A$ é igual ao número mínimo de anticadeias que combrem $A$.
+\end{teorema}
+
+\begin{teorema}[de Sperner]
+  Seja $(A,\preceq)$ um conjunto parcialmente ordenado. O tamanho da maior anticadeia em $A$ é $\binom{n}{\lfloor n/2 \rfloor}$.
+\end{teorema}
+
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+%   BIBLIOGRAFIA
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+\begin{thebibliography}{99}
+\bibitem{Aigner}   Aigner, M. \textit{As provas estão n'O LIVRO.} Editora Edgar Bl\"{u}cher, 2002.
+\bibitem{Bollobas}  Bollobás, B. \textit{Graph Theory. An Introductory Course.} Graduate Texts in Mathematics, Springer-Verlag, 1979.
+\bibitem{Bondy1}   Bondy, J.A. \& Murty, U.S.R. \textit{Graph Theory with Applications.} North-Holland, 1982.
+\bibitem{Bondy2}   Bondy, J.A. \& Murty, U.S.R. \textit{Graph Theory.} Graduate Texts in Mathematics, Springer-Verlag, 2008.
+\bibitem{Caminha}  Caminha, A. M.N. \textit{Tópicos de Matemática Elementar, Volume 4: Combinatória.} Coleção Professor de Matemática, SBM, 2012.
+\bibitem{Diestel}   Diestel, R. \textit{Graph Theory.} Graduate Texts in Mathematics, Third Ed., Springer-Verlag, 2005.
+\bibitem{Graham}  Graham, R.L., Rothschild, B.L. \& Spencer, J.H. \textit{Ramsey Theory.} Second Ed., Wiley, 1990.
+\bibitem{Lint}   van Lint, J.H. \& Wilsom, R.M. \textit{A Course in Combinatorics.} Second Ed., Cambridge, 2006.
+\end{thebibliography}
+
+
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+%   FIM DO DOCUMENTO
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+\end{document}
